@@ -14,10 +14,10 @@ export function AuthButton() {
   if (user) {
     return (
       <div className="flex items-center gap-4">
-        <span className="text-sm">你好, {user.user_metadata?.full_name || user.email}</span>
+        <span className="text-sm">Welcome, {user.user_metadata?.full_name || user.email}</span>
         <Button variant="outline" size="sm" onClick={signOut} className="flex items-center gap-2">
           <LogOut size={16} />
-          退出登录
+          Sign out
         </Button>
       </div>
     )
@@ -26,7 +26,7 @@ export function AuthButton() {
   return (
     <Button onClick={signInWithGoogle} className="flex items-center gap-2">
       <LogIn size={16} />
-      使用 Google 登录
+      Sign in with Google
     </Button>
   )
 }

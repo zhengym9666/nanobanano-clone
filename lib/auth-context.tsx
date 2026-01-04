@@ -43,16 +43,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signInWithGoogle = async () => {
     try {
+      // 首先清除所有现有会话
+      await supabase.auth.signOut()
+      
+      // 然后开始OAuth流程，强制刷新页面
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: `${window.location.origin}/auth/callback`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          },
         },
       })
 
       if (error) throw error
     } catch (error) {
       console.error('Error signing in with Google:', error)
+      // 显示错误消息给用户
+      alert(`登录失败: ${error instanceof Error ? error.message : '未知错误'}`)
     }
   }
 
