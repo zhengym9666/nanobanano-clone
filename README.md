@@ -9,8 +9,26 @@
 - **API Key不暴露**：使用Next.js API Route保护敏感的API Key
 - **环境变量安全**：`.env.local`文件被`.gitignore`忽略
 - **服务器端处理**：所有API调用在服务器端完成，用户无法获取API Key
+- **用户认证**：集成了Supabase提供的安全Google登录认证功能
 
-### 📋 部署前准备
+### � Google登录功能
+
+本应用集成了Google OAuth登录功能，使用Supabase作为身份验证服务。
+
+- **安全的Google OAuth认证**：用户可以使用Google账户安全登录
+- **会话管理**：使用服务器端会话管理，确保用户状态安全
+- **隐私保护**：不存储敏感的用户密码，所有认证由Google和Supabase处理
+- **强制重新认证**：每次登录时都会重定向到Google认证页面，确保用户确认
+
+要配置Google登录功能，请按以下步骤操作：
+
+1. 访问 [Supabase控制台](https://app.supabase.com/)
+2. 创建项目或使用现有项目
+3. 进入Authentication > Providers > Google
+4. 启用Google认证并获取所需的凭据
+5. 将这些凭据添加到您的环境变量中
+
+### � 部署前准备
 
 1. **获取API Key**
    - 访问 [OpenRouter.ai](https://openrouter.ai/)
@@ -21,6 +39,9 @@
    ```bash
    # 在项目根目录创建 .env.local 文件
    OPENROUTER_API_KEY=your_actual_api_key_here
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
    ```
 
 ### 🚀 部署选项
@@ -75,10 +96,15 @@ npm install
 # 2. 复制环境变量模板
 cp .env.example .env.local
 
-# 3. 编辑 .env.local，添加你的API Key
+# 3. **编辑 .env.local，添加你的API Key
 OPENROUTER_API_KEY=your_actual_api_key_here
 
-# 4. 启动开发服务器
+# 4. 配置Google登录功能
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+# 5. 启动开发服务器
 npm run dev
 ```
 
@@ -103,6 +129,12 @@ npm run dev
 3. **环境变量未生效**
    - 重启开发服务器
    - 确认变量名正确：`OPENROUTER_API_KEY`
+
+4. **Google登录失败**
+   - 检查Supabase环境变量配置
+   - 确认Supabase项目已正确配置Google OAuth
+   - 清除浏览器缓存和Cookie
+   - 查看浏览器控制台中的错误信息
 
 ### 📚 相关文档
 
