@@ -46,11 +46,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // 首先清除所有现有会话
       await supabase.auth.signOut()
       
+      // 获取应用URL配置
+      const appUrl = process.env.NEXT_PUBLIC_APP_URL || window.location.origin
+      
       // 然后开始OAuth流程，强制刷新页面
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
+          redirectTo: `${appUrl}/auth/callback`,
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',
