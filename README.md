@@ -10,6 +10,7 @@
 - **环境变量安全**：`.env.local`文件被`.gitignore`忽略
 - **服务器端处理**：所有API调用在服务器端完成，用户无法获取API Key
 - **用户认证**：集成了Supabase提供的安全Google登录认证功能
+- **支付安全**：使用Creem进行支付处理，支付信息不经过我们的服务器
 
 ### � Google登录功能
 
@@ -28,7 +29,23 @@
 4. 启用Google认证并获取所需的凭据
 5. 将这些凭据添加到您的环境变量中
 
-### � 部署前准备
+### 💳 Creem支付功能
+
+本应用集成了Creem支付系统，提供安全便捷的支付体验。
+
+- **安全的支付处理**：所有支付信息直接在用户浏览器与Creem服务器之间传输
+- **多种支付方式**：支持信用卡、PayPal等多种支付方式
+- **订阅管理**：支持订阅和一次性付费两种模式
+- **自动续费**：订阅服务自动续费，确保服务不中断
+
+要配置Creem支付功能，请按以下步骤操作：
+
+1. 访问 [Creem.io](https://creem.io/)
+2. 注册账户并创建产品
+3. 获取API Key和Webhook Secret
+4. 将这些凭据添加到您的环境变量中
+
+### 部署前准备
 
 1. **获取API Key**
    - 访问 [OpenRouter.ai](https://openrouter.ai/)
@@ -39,6 +56,7 @@
    ```bash
    # 在项目根目录创建 .env.local 文件
    OPENROUTER_API_KEY=your_actual_api_key_here
+   CREEM_API_KEY=your_creem_api_key_here
    NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
    NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
@@ -104,7 +122,12 @@ NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 
-# 5. 启动开发服务器
+# 5. 配置Creem支付功能
+CREEM_API_KEY=your_creem_api_key_here
+CREEM_WEBHOOK_SECRET=your_webhook_secret_here
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+# 6. 启动开发服务器
 npm run dev
 ```
 

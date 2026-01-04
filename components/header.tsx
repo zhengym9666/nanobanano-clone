@@ -13,25 +13,37 @@ export function Header() {
 
         <nav className="hidden md:flex items-center gap-6">
           <Link
-            href="#generator"
+            href="/"
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Home
+          </Link>
+          <Link
+            href="/#generator"
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
           >
             Try Editor
           </Link>
           <Link
-            href="#showcase"
+            href="/#pricing"
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Pricing
+          </Link>
+          <Link
+            href="/#showcase"
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
           >
             Examples
           </Link>
           <Link
-            href="#features"
+            href="/#features"
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
           >
             Features
           </Link>
           <Link
-            href="#faq"
+            href="/#faq"
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
           >
             FAQ
