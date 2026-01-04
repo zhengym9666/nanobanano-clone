@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { AuthButton } from "@/components/auth-button"
 
 export function Header() {
   return (
@@ -37,7 +38,9 @@ export function Header() {
           </Link>
         </nav>
 
-        <Button className="bg-primary text-primary-foreground hover:bg-primary/90">Get Started</Button>
+        <div className="flex items-center gap-4">
+          <AuthButton />
+        </div>
       </div>
     </header>
   )
