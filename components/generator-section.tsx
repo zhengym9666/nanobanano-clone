@@ -3,18 +3,21 @@
 import type React from "react"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Upload, Wand2, Loader2, Download } from "lucide-react"
-
+import { useAuth } from "@/lib/auth-context"
 
 export function GeneratorSection() {
   const [prompt, setPrompt] = useState("")
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
   const [generatedImages, setGeneratedImages] = useState<string[]>([])
   const [isGenerating, setIsGenerating] = useState(false)
+  const { user, loading: authLoading, signInWithGoogle } = useAuth()
+  const router = useRouter()
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -39,6 +42,18 @@ export function GeneratorSection() {
   }
 
   const generateImage = async () => {
+    // 检查用户是否已登录
+    if (!user) {
+      // 直接触发Google登录流程
+      try {
+        await signInWithGoogle()
+      } catch (error) {
+        console.error('Login error:', error)
+        alert('Login failed. Please try again.')
+      }
+      return
+    }
+
     if (!prompt.trim() || !selectedImage) {
       alert("Please provide both a prompt and an image")
       return
@@ -102,7 +117,9 @@ export function GeneratorSection() {
       const url = window.URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = url
-      a.download = `generated-image-${Date.now()}.png`
+      // 在客户端生成时间戳，避免服务器端和客户端不一致
+      const timestamp = Math.floor(Date.now() / 1000)
+      a.download = `generated-image-${timestamp}.png`
       document.body.appendChild(a)
       a.click()
       window.URL.revokeObjectURL(url)
@@ -178,9 +195,13 @@ export function GeneratorSection() {
                   className="w-full bg-primary text-primary-foreground hover:bg-primary/90" 
                   size="lg"
                   onClick={generateImage}
-                  disabled={isGenerating || !prompt.trim() || !selectedImage}
+                  disabled={authLoading || isGenerating || !prompt.trim() || !selectedImage}
                 >
-                  {isGenerating ? (
+                  {authLoading ? (
+                    "Checking login status..."
+                  ) : !user ? (
+                    "Login to Generate"
+                  ) : isGenerating ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       Generating...
@@ -189,6 +210,15 @@ export function GeneratorSection() {
                     "Generate Now"
                   )}
                 </Button>
+                {authLoading ? (
+                  <p className="text-sm text-muted-foreground text-center">
+                    Checking authentication status...
+                  </p>
+                ) : !user && (
+                  <p className="text-sm text-muted-foreground text-center">
+                    Please sign in to generate AI-edited images
+                  </p>
+                )}
               </CardContent>
             </Card>
 
