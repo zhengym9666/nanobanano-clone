@@ -66,14 +66,19 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Blog
+                <Link href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Contact
+                <Link href="/terms" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Terms of Service
                 </Link>
+              </li>
+              <li>
+                <a href="mailto:support@nanobananalab.shop" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Contact
+                </a>
               </li>
             </ul>
           </div>
