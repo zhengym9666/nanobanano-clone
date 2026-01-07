@@ -15,14 +15,14 @@ export function HeroSection() {
         <div className="mx-auto max-w-4xl text-center">
           <Badge variant="secondary" className="mb-6 px-4 py-2 text-sm font-medium">
             <span className="mr-2">🍌</span>
-            The AI model that outperforms Flux Kontext
+            Advanced AI Image Editor
           </Badge>
 
           <h1 className="mb-6 text-4xl font-bold tracking-tight text-balance md:text-6xl lg:text-7xl">Nano Banana</h1>
 
           <p className="mb-8 text-xl text-muted-foreground text-pretty md:text-2xl">
-            Transform any image with simple text prompts. Nano-banana's advanced model delivers consistent character
-            editing and scene preservation that surpasses Flux Kontext. Experience the future of AI image editing.
+            Transform any image with simple text prompts. Our advanced AI model delivers consistent character
+            editing and scene preservation. Experience the future of AI image editing.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -49,6 +49,11 @@ export function HeroSection() {
               <span>Natural language</span>
             </div>
           </div>
+
+          <p className="mt-8 text-xs text-muted-foreground/60">
+            Nano Banana is an independent AI image editing platform. We are not affiliated with, endorsed by, 
+            or sponsored by any AI model providers. All product names, logos, and brands are property of their respective owners.
+          </p>
         </div>
       </div>
     </section>

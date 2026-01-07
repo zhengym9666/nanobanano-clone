@@ -1,55 +1,44 @@
 import { Card, CardContent } from "@/components/ui/card"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-
-const testimonials = [
-  {
-    name: "AIArtistPro",
-    role: "Digital Creator",
-    content:
-      "This editor completely changed my workflow. The character consistency is incredible - miles ahead of Flux Kontext!",
-    initials: "AP",
-  },
-  {
-    name: "ContentCreator",
-    role: "UGC Specialist",
-    content:
-      "Creating consistent AI influencers has never been easier. It maintains perfect face details across edits!",
-    initials: "CC",
-  },
-  {
-    name: "PhotoEditor",
-    role: "Professional Editor",
-    content: "One-shot editing is basically solved with this tool. The scene blending is so natural and realistic!",
-    initials: "PE",
-  },
-]
 
 export function TestimonialsSection() {
   return (
     <section className="py-20">
       <div className="container">
         <div className="mx-auto max-w-2xl text-center mb-16">
-          <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl">User Reviews</h2>
-          <p className="text-lg text-muted-foreground">What creators are saying</p>
+          <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl">How It Works</h2>
+          <p className="text-lg text-muted-foreground">Simple steps to transform your images</p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
-          {testimonials.map((testimonial, index) => (
-            <Card key={index} className="border-border/50">
-              <CardContent className="pt-6">
-                <div className="flex items-start gap-4 mb-4">
-                  <Avatar className="h-12 w-12 bg-primary/10 text-primary">
-                    <AvatarFallback>{testimonial.initials}</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="font-semibold">{testimonial.name}</p>
-                    <p className="text-sm text-muted-foreground">{testimonial.role}</p>
-                  </div>
-                </div>
-                <p className="text-muted-foreground leading-relaxed">"{testimonial.content}"</p>
-              </CardContent>
-            </Card>
-          ))}
+          <Card className="border-border/50">
+            <CardContent className="pt-6">
+              <div className="mb-4 text-4xl">1</div>
+              <h3 className="font-semibold text-lg mb-2">Upload Your Image</h3>
+              <p className="text-muted-foreground">
+                Simply drag and drop or select any image you want to edit. Our editor supports all common image formats.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="border-border/50">
+            <CardContent className="pt-6">
+              <div className="mb-4 text-4xl">2</div>
+              <h3 className="font-semibold text-lg mb-2">Describe Your Vision</h3>
+              <p className="text-muted-foreground">
+                Use natural language to describe what you want to change. Our AI understands complex instructions and context.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="border-border/50">
+            <CardContent className="pt-6">
+              <div className="mb-4 text-4xl">3</div>
+              <h3 className="font-semibold text-lg mb-2">Get Amazing Results</h3>
+              <p className="text-muted-foreground">
+                Watch as our AI transforms your image exactly as you imagined. Download your edited image instantly.
+              </p>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </section>
