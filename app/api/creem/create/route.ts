@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
     // 初始化Creem SDK
     const creem = createCreem({
       apiKey: creemApiKey,
-      testMode: true, // 测试模式
+      // testMode: true, // 测试模式
       webhookSecret: process.env.CREEM_WEBHOOK_SECRET,
     });
 
@@ -31,9 +31,9 @@ export async function POST(request: NextRequest) {
         case 'pro-plan':
           return process.env.CREEM_PRO_PLAN_ID || 'prod_3fqtMm657p4aD7QANJELAS';
         case 'enterprise-plan':
-          return process.env.CREEM_ENTERPRISE_PLAN_ID || 'prod_enterprise_default';
+          return process.env.CREEM_PRO_PLAN_ID || 'prod_enterprise_default';
         default:
-          throw new Error('Invalid plan ID');
+          return process.env.CREEM_PRO_PLAN_ID;
       }
     };
 
