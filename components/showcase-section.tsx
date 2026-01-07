@@ -6,22 +6,22 @@ const showcaseItems = [
   {
     title: "Ultra-Fast Mountain Generation",
     description: "Created in 0.8 seconds with Nano Banana's optimized neural engine",
-    query: "snow-capped mountain peak at sunrise with dramatic clouds",
+    image: "/image1.png",
   },
   {
     title: "Instant Garden Creation",
     description: "Complex scene rendered in milliseconds using Nano Banana technology",
-    query: "lush botanical garden with colorful flowers and stone pathways",
+    image: "/image2.png",
   },
   {
     title: "Real-time Beach Synthesis",
     description: "Nano Banana delivers photorealistic results at lightning speed",
-    query: "tropical beach at sunset with palm trees and turquoise water",
+    image: "/image3.png",
   },
   {
     title: "Rapid Aurora Generation",
     description: "Advanced effects processed instantly with Nano Banana AI",
-    query: "northern lights aurora borealis over snowy landscape",
+    image: "/image4.png",
   },
 ]
 
@@ -35,12 +35,12 @@ export function ShowcaseSection() {
           <p className="text-muted-foreground">See what Nano Banana generates in milliseconds</p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
           {showcaseItems.map((item, index) => (
             <Card key={index} className="overflow-hidden border-border/50 transition-all hover:shadow-lg">
               <div className="relative aspect-video bg-gradient-to-br from-primary/20 via-accent/20 to-muted">
                 <img
-                  src={`/.jpg?height=400&width=600&query=${item.query}`}
+                  src={item.image}
                   alt={item.title}
                   className="h-full w-full object-cover"
                 />
