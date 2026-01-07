@@ -77,7 +77,7 @@ export function Footer() {
               </li>
               <li>
                 <a href="mailto:support@nanobananalab.shop" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Contact
+                  support@nanobananalab.shop
                 </a>
               </li>
             </ul>
