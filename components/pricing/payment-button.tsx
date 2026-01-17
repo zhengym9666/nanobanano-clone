@@ -30,43 +30,55 @@ export function PaymentButton({ planId, planName, planType, amount, disabled = f
       setLoading(true);
       setError(null);
 
-      const requestBody = {
-        productId: planId,
-        planType,
-        userId: user.id,
-        amount, // 以分为单位
-        currency: 'USD',
-      };
-      console.log('Request body:', requestBody);
+      // 检查是否处于支付测试模式
+      const isPaymentTestMode = process.env.NEXT_PUBLIC_PAYMENT_TEST_MODE === 'true';
+      console.log('Payment test mode:', isPaymentTestMode);
 
-      // 创建支付会话
-      const response = await fetch('/api/creem/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestBody),
-      });
-
-      console.log('Response status:', response.status);
-      const data = await response.json();
-      console.log('Response data:', data);
-
-      if (!response.ok) {
-        console.error('API response not ok:', response.status, data);
-        throw new Error(data.error || data.message || `Failed to create payment session (${response.status})`);
-      }
-
-      console.log('Payment session created successfully:', data);
-
-      // 重定向到Creem支付页面
-      const checkoutUrl = data.checkoutUrl || data.url || data.redirectUrl;
-      if (checkoutUrl) {
-        console.log('Redirecting to checkout URL:', checkoutUrl);
-        window.location.href = checkoutUrl;
+      if (isPaymentTestMode) {
+        // 支付测试模式：直接跳转到支付成功页面
+        console.log('Running in payment test mode, skipping actual payment process');
+        window.location.href = `/checkout/success?session_id=test_payment&email=${encodeURIComponent(user.email)}`;
       } else {
-        console.error('No checkout URL in response:', data);
-        throw new Error('No checkout URL returned from API');
+        // 正常支付模式：执行实际支付流程
+        console.log('Running in normal payment mode, proceeding with actual payment');
+        const requestBody = {
+          productId: planId,
+          planType,
+          userId: user.id,
+          amount, // 以分为单位
+          currency: 'USD',
+        };
+        console.log('Request body:', requestBody);
+
+        // 创建支付会话
+        const response = await fetch('/api/creem/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        });
+
+        console.log('Response status:', response.status);
+        const data = await response.json();
+        console.log('Response data:', data);
+
+        if (!response.ok) {
+          console.error('API response not ok:', response.status, data);
+          throw new Error(data.error || data.message || `Failed to create payment session (${response.status})`);
+        }
+
+        console.log('Payment session created successfully:', data);
+
+        // 重定向到Creem支付页面
+        const checkoutUrl = data.checkoutUrl || data.url || data.redirectUrl;
+        if (checkoutUrl) {
+          console.log('Redirecting to checkout URL:', checkoutUrl);
+          window.location.href = checkoutUrl;
+        } else {
+          console.error('No checkout URL in response:', data);
+          throw new Error('No checkout URL returned from API');
+        }
       }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'An error occurred during payment';

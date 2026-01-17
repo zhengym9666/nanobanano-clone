@@ -12,64 +12,21 @@ export function PricingSection() {
   const pricingPlans = [
     {
       id: "basic-plan",
-      name: "Basic",
-      price: "$144",
-      priceInCents: 14400,
-      period: "/year",
+      name: "Basic Plan",
+      price: "$1",
+      priceInCents: 100,
+      period: "/month",
       type: "subscription",
       description: "Perfect for getting started with AI image generation",
       features: [
-        "1,800 credits per year",
-        "= 76 high-quality images/month",
+        "Unlimited image generations",
         "Basic AI models",
         "Standard support",
         "Commercial license included",
         "Cancel anytime"
       ],
-      buttonText: "Get Started with Basic",
-      popular: false
-    },
-    {
-      id: "pro-plan",
-      name: "Pro",
-      price: "$234",
-      priceInCents: 23400,
-      period: "/year",
-      type: "subscription",
-      description: "Most popular for professionals and creators",
-      features: [
-        "9,600 credits per year",
-        "= 400 high-quality images/month",
-        "Advanced AI models",
-        "Priority support",
-        "Batch generation",
-        "Commercial license included",
-        "Cancel anytime",
-        "Image editing tools (Coming in October)"
-      ],
-      buttonText: "Get Started with Pro",
+      buttonText: "Get Started",
       popular: true
-    },
-    {
-      id: "max-plan",
-      name: "Max",
-      price: "$480",
-      priceInCents: 48000,
-      period: "/year",
-      type: "subscription",
-      description: "For power users and businesses with high volume needs",
-      features: [
-        "19,200 credits per year",
-        "= 800 high-quality images/month",
-        "Fastest generation speed",
-        "Dedicated account manager",
-        "Priority queue access",
-        "Commercial license included",
-        "Cancel anytime",
-        "Professional editing suite (Coming in October)"
-      ],
-      buttonText: "Get Started with Max",
-      popular: false
     }
   ]
 
@@ -83,7 +40,7 @@ export function PricingSection() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-1 gap-8 max-w-2xl mx-auto">
           {pricingPlans.map((plan, index) => (
             <Card key={index} className={`flex flex-col transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/20 hover:border-2 hover:border-primary border`}>
               <CardHeader>

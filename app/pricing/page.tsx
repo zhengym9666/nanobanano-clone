@@ -12,59 +12,23 @@ export default function PricingPage() {
   
   const pricingPlans = [
     {
-      id: "free-plan",
-      name: "Free",
-      price: "$0",
-      priceInCents: 0,
+      id: "basic-plan",
+      name: "Basic Plan",
+      price: "$1",
+      priceInCents: 100,
       period: "/month",
-      type: "free",
-      description: "Perfect for trying out Nano Banana",
+      type: "subscription",
+      description: "Perfect for getting started with AI image generation",
       features: [
-        "5 image generations per month",
-        "Basic editing tools",
-        "Low-resolution exports",
-        "Community support"
+        "100 credits per month",
+        "= 4 high-quality images/month",
+        "Basic AI models",
+        "Standard support",
+        "Commercial license included",
+        "Cancel anytime"
       ],
       buttonText: "Get Started",
-      popular: false
-    },
-    {
-      id: "pro-plan",
-      name: "Pro",
-      price: "$19",
-      priceInCents: 1900,
-      period: "/month",
-      type: "subscription",
-      description: "For creative professionals and enthusiasts",
-      features: [
-        "Unlimited image generations",
-        "Advanced editing tools",
-        "High-resolution exports",
-        "Priority support",
-        "No watermarks",
-        "Batch processing"
-      ],
-      buttonText: "Start Pro Trial",
       popular: true
-    },
-    {
-      id: "enterprise-plan",
-      name: "Enterprise",
-      price: "$99",
-      priceInCents: 9900,
-      period: "/month",
-      type: "subscription",
-      description: "For teams and businesses",
-      features: [
-        "Everything in Pro",
-        "Team collaboration tools",
-        "API access",
-        "Custom integrations",
-        "Dedicated account manager",
-        "SLA guarantee"
-      ],
-      buttonText: "Contact Sales",
-      popular: false
     }
   ]
 
@@ -81,7 +45,7 @@ export default function PricingPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-1 gap-8 max-w-2xl mx-auto">
             {pricingPlans.map((plan, index) => (
               <Card key={index} className={`flex flex-col ${plan.popular ? 'border-2 border-primary shadow-lg' : ''}`}>
                 <CardHeader>

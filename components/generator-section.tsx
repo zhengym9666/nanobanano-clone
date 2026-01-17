@@ -59,6 +59,42 @@ export function GeneratorSection() {
       return
     }
 
+    // 检查用户VIP状态
+    try {
+      console.log('Checking VIP status for user:', user.email)
+      const vipResponse = await fetch('/api/check-vip', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: user.email }),
+      })
+
+      const vipData = await vipResponse.json()
+      console.log('VIP Check API response:', vipData)
+
+      if (!vipResponse.ok) {
+        throw new Error(vipData.error || 'Failed to check VIP status')
+      }
+
+      if (!vipData.isVip) {
+        // 显示错误提示
+        alert('Your VIP membership has expired or not activated. Please purchase a membership to use the generation feature.')
+        
+        // 滚动到定价部分
+        const pricingSection = document.getElementById('pricing')
+        if (pricingSection) {
+          pricingSection.scrollIntoView({ behavior: 'smooth' })
+        }
+        
+        return
+      }
+    } catch (error) {
+      console.error('Error checking VIP status:', error)
+      alert('Failed to check VIP status. Please try again later.')
+      return
+    }
+
     setIsGenerating(true)
     try {
       // Create an AbortController for the client-side timeout

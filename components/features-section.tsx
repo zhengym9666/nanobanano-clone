@@ -50,7 +50,7 @@ export function FeaturesSection() {
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
           {features.map((feature, index) => {
             const Icon = feature.icon
             return (

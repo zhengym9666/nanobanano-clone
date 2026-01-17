@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { upsertVipMember } from '@/lib/supabase/db-tools';
 
 interface PaymentVerificationResult {
   success: boolean;
@@ -32,28 +33,84 @@ export default function CheckoutSuccessContent() {
 
         console.log('Verifying payment with session ID:', finalSessionId);
 
-        // 调用验证 API
-        const response = await fetch('/api/creem/verify-payment', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            sessionId: finalSessionId,
-          }),
-        });
-
-        const result = await response.json();
-        console.log('Verification result:', result);
-
-        setVerification(result);
-
-        if (result.success) {
-          // 支付成功，可以显示成功页面
-          console.log('Payment verified successfully');
+        // 检查是否是测试支付会话
+        if (finalSessionId === 'test_payment') {
+          // 测试模式：直接打印支付成功信息并插入VIP会员数据
+          console.log('=== Payment Test Mode Active ===');
+          console.log('Directly printing payment success and inserting VIP member data...');
+          
+          // 从URL参数获取用户邮箱
+          const userEmail = searchParams.get('email');
+          
+          if (userEmail) {
+            console.log('Creating VIP member record for email:', userEmail);
+            
+            // 使用db-tools中的upsertVipMember方法
+            const vipMember = await upsertVipMember(userEmail, 'active');
+            
+            if (vipMember) {
+              console.log('✅ VIP member created successfully:', vipMember);
+            } else {
+              console.error('❌ Failed to create VIP member');
+            }
+          }
+          
+          // 直接设置验证结果为成功
+          setVerification({
+            success: true,
+            message: 'Test payment completed successfully',
+            product: {
+              name: 'Pro Plan (Test Mode)'
+            },
+            customer: {
+              email: userEmail || 'test@example.com'
+            }
+          });
         } else {
-          // 支付验证失败
-          console.error('Payment verification failed:', result.message);
+          // 正常模式：调用验证 API
+          const response = await fetch('/api/creem/verify-payment', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              sessionId: finalSessionId,
+            }),
+          });
+
+          const result = await response.json();
+          console.log('Verification result:', result);
+
+          setVerification(result);
+
+          if (result.success) {
+            // 支付成功，可以显示成功页面
+            console.log('Payment verified successfully');
+            
+            // 往vip_member表插入真实数据
+            console.log('Creating VIP member record...');
+            
+            // 从验证结果中获取用户邮箱
+            const userEmail = result.customer?.email;
+            
+            if (userEmail) {
+              console.log('Creating VIP member record for email:', userEmail);
+              
+              // 使用db-tools中的upsertVipMember方法
+              const vipMember = await upsertVipMember(userEmail, 'active');
+              
+              if (vipMember) {
+                console.log('✅ VIP member created successfully:', vipMember);
+              } else {
+                console.error('❌ Failed to create VIP member');
+              }
+            } else {
+              console.error('❌ Cannot create VIP member: User email not found');
+            }
+          } else {
+            // 支付验证失败
+            console.error('Payment verification failed:', result.message);
+          }
         }
 
       } catch (error) {
